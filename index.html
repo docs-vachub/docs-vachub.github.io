@@ -1,1 +1,148 @@
-# VAC HUBS
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vachub 文档中心 - 多项目统一托管</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: #2d3748;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 22px;
+            line-height: 1.7;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 700;
+            color: #4a85e7;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #6b7a90;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+            transition: all 0.24s ease;
+            border: 1px solid #e3edfa;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border-color: #c9dcf7;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            color: #3b4d66;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p {
+            color: #6b7a90;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .card a {
+            display: block;
+            color: #4a85e7;
+            font-size: 15px;
+            padding: 7px 0;
+            text-decoration: none;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+            color: #2d6acd;
+        }
+
+        .footer {
+            text-align: center;
+            color: #8897aa;
+            font-size: 14px;
+            padding-top: 30px;
+            border-top: 1px solid #e3edfa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo">Vachub 文档中心</div>
+        <div class="subtitle">
+            多项目统一托管 | 隐私政策 · 用户协议 · 帮助中心 · 合规文档
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- 项目 1 -->
+        <div class="card">
+            <h2>📱 健康朋友</h2>
+            <p>应用专属合规文档与帮助中心</p>
+            <a href="/app1/privacy.html">隐私政策</a>
+            <a href="/app1/agreement.html">用户协议</a>
+            <a href="/app1/delete-account.html">账号注销说明</a>
+            <a href="/app1/help.html">使用帮助</a>
+        </div>
+
+        <!-- 项目 2 -->
+        <div class="card">
+            <h2>📱 PetiMeti</h2>
+            <p>应用专属合规文档与帮助中心</p>
+            <a href="/app2/privacy.html">隐私政策</a>
+            <a href="/app2/agreement.html">用户协议</a>
+            <a href="/app2/delete-account.html">账号注销说明</a>
+            <a href="/app2/help.html">使用帮助</a>
+        </div>
+
+        <!-- 公共资源 -->
+        <div class="card">
+            <h2>📦 公共资源</h2>
+            <p>全项目通用文档与合规说明</p>
+            <a href="/common/security.html">数据安全说明</a>
+            <a href="/common/opensource.html">开源声明</a>
+            <a href="/common/contact.html">联系我们</a>
+            <a href="/common/faq.html">常见问题</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 Vachub Studio · 多项目文档托管中心<br>
+        本仓库仅用于公开静态资源存储，无后端服务
+    </div>
+
+</body>
+</html>
