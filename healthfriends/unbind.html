@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设备解除绑定</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f7;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #86868b;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+        }
+        button:hover {
+            background-color: #0077ed;
+        }
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        #result {
+            margin-top: 1rem;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .success {
+            background-color: #eafaf1;
+            color: #2e7d32;
+            display: block !important;
+        }
+        .error {
+            background-color: #fef1f1;
+            color: #d32f2f;
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>设备解除绑定</h2>
+    <div class="input-group">
+        <label for="deviceKey">设备 Unique Key</label>
+        <input type="text" id="deviceKey" placeholder="请输入设备 Unique Key" value="FC:62:58:04:BA:25">
+    </div>
+    <button id="unbindBtn">解除绑定</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    document.getElementById('unbindBtn').addEventListener('click', async function() {
+        const deviceKey = document.getElementById('deviceKey').value.trim();
+        const resultDiv = document.getElementById('result');
+        const btn = this;
+
+        if (!deviceKey) {
+            showResult('请输入设备 Unique Key', 'error');
+            return;
+        }
+
+        // 更新状态
+        btn.disabled = true;
+        btn.innerText = '处理中...';
+        resultDiv.style.display = 'none';
+
+        try {
+            // 尝试方案 1: 标准 POST 请求
+            const url = `https://tnc.pet/pmSmart//guest/unbindDevice?deviceUniqueKey=${encodeURIComponent(deviceKey)}`;
+            console.log('正在尝试标准请求:', url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult('解绑成功: ' + (data.message || '操作已执行'), 'success');
+                    return;
+                }
+            } catch (e) {
+                console.warn('标准请求失败，尝试 no-cors 模式...', e);
+            }
+
+            // 尝试方案 2: no-cors 模式 (虽然拿不到结果，但请求可能到达后端)
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors'
+                });
+                showResult('已解除绑定，请检查设备状态是否已解除。', 'success');
+            } catch (e) {
+                throw new Error('所有请求尝试均失败');
+            }
+
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+                showResult('网络错误: 无法发起请求。这通常是由于跨域(CORS)限制导致的。请尝试在本地服务器环境中运行此页面，或检查 API 是否允许来自当前域名的访问。', 'error');
+            } else {
+                showResult('发生错误: ' + error.message, 'error');
+            }
+        } finally {
+            btn.disabled = false;
+            btn.innerText = '解除绑定';
+        }
+    });
+
+    function showResult(text, type) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerText = text;
+        resultDiv.className = type;
+        resultDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

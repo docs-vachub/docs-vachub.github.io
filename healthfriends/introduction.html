@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康朋友 - 官方介绍</title>
+    <meta name="description" content="健康朋友 - 专业健康数据管理应用，通过蓝牙连接血压计、体脂称、睡眠仪等设备，智能统计并图表化展示您的健康数据">
+    <meta name="keywords" content="健康朋友,健康管理,蓝牙血压计,体脂称,睡眠仪,健康数据,图表分析">
+    <link rel="icon" href="https://hf.goodlymed.com/download/appUserHeadPortraitSite/2026/1/6/a946dab18eca0cb29de2070442f28156.png" type="image/x-icon">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(76, 175, 80, 0.15);
+        }
+        
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            margin: 0 auto 25px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+        
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .app-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .app-slogan {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 主要内容区 */
+        .content-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #2E7D32;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f9f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 12px;
+            font-size: 1.5rem;
+        }
+        
+        /* 功能介绍 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .feature-item {
+            background: #f8fff8;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid #4CAF50;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.1);
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2E7D32;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-title i {
+            margin-right: 10px;
+        }
+        
+        /* 设备展示 */
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .device-card {
+            text-align: center;
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e8f5e9;
+            transition: all 0.3s;
+        }
+        
+        .device-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.15);
+        }
+        
+        .device-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #2E7D32;
+        }
+        
+        .device-name {
+            font-size: 1.4rem;
+            color: #2E7D32;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .device-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 下载区域 */
+        .download-section {
+            text-align: center;
+            padding: 50px 40px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(76, 175, 80, 0.4);
+        }
+        
+        .download-btn.android {
+            background: linear-gradient(to right, #3ddc84, #0d9d58);
+            box-shadow: 0 8px 25px rgba(61, 220, 132, 0.3);
+        }
+        
+        .download-btn.android:hover {
+            box-shadow: 0 12px 30px rgba(61, 220, 132, 0.4);
+        }
+        
+        .download-note {
+            margin-top: 25px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* 数据图表展示 */
+        .chart-demo {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .chart-placeholder {
+            background: linear-gradient(135deg, #f8fff8 0%, #e8f5e9 100%);
+            border-radius: 12px;
+            padding: 40px;
+            border: 2px dashed #c8e6c9;
+            margin: 20px 0;
+        }
+        
+        .chart-placeholder i {
+            font-size: 4rem;
+            color: #81c784;
+            margin-bottom: 20px;
+        }
+        
+        /* 联系方式 */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            color: #555;
+        }
+        
+        .contact-item i {
+            margin-right: 10px;
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            margin-top: 50px;
+        }
+        
+        .copyright {
+            margin-top: 15px;
+        }
+        
+        /* 蒲公英特别样式 */
+        .pgyer-notice {
+            background: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .app-title {
+                font-size: 2.2rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .features-grid, .devices-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-btn {
+                display: block;
+                margin: 15px auto;
+                width: 90%;
+                max-width: 300px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+        }
+        
+        /* 图标字体 */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部：应用名称和图标 -->
+        <header class="header">
+            <div class="app-icon">
+                <img src="https://hf.goodlymed.com/download/appUserHeadPortraitSite/2026/1/6/a946dab18eca0cb29de2070442f28156.png" alt="健康朋友应用图标">
+            </div>
+            <h1 class="app-title" id="app-name">健康朋友</h1>
+            <p class="app-slogan">专业健康数据管家，蓝牙连接设备，智能统计图表展示您的健康数据</p>
+        </header>
+        
+        <!-- 应用介绍 -->
+        <section class="content-section">
+            <h2 class="section-title"><i class="fas fa-heartbeat"></i> 应用介绍</h2>
+            <div class="app-description">
+                <p>《健康朋友》是一款专业的个人健康数据管理应用，致力于为用户提供便捷、智能的健康监测解决方案。通过蓝牙技术，应用可无缝连接多种健康监测设备，实时采集您的生理数据，并通过智能分析系统将数据转化为直观的图表和趋势报告。</p>
+                
+                <p>在快节奏的现代生活中，健康管理变得尤为重要。《健康朋友》应运而生，为您打造一个全方位的健康数据管理中心。无论是日常血压监测、体脂变化追踪，还是睡眠质量分析，应用都能为您提供专业的数据支持。</p>
+                
+                <p>我们与多家知名健康设备制造商合作，确保数据的准确性和兼容性。应用采用先进的算法对您的健康数据进行深度分析，识别潜在风险趋势，并提供个性化的健康建议。所有数据均通过加密存储，充分保障您的隐私安全。</p>
+                
+                <p>《健康朋友》已获得医疗健康领域的专业认可，为数万用户提供可靠的健康管理服务。我们将持续优化产品功能，引入更多健康设备支持，为您的健康保驾护航。</p>
+            </div>
+        </section>
+        
+        <!-- 支持设备 -->
+        <section class="content-section">
+            <h2 class="section-title"><i class="fas fa-bluetooth-b"></i> 支持设备</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem;">目前支持以下三类健康监测设备的蓝牙连接：</p>
+            
+            <div class="devices-grid">
+                <div class="device-card">
+                    <div class="device-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="device-name">血压计</h3>
+                    <p class="device-desc">智能蓝牙血压计，精准测量收缩压、舒张压和心率，数据实时同步至应用，生成血压变化趋势图。</p>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <h3 class="device-name">体脂称</h3>
+                    <p class="device-desc">专业体脂测量仪，全面分析体重、体脂率、肌肉量、水分率等多项身体成分指标。</p>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h3 class="device-name">睡眠仪</h3>
+                    <p class="device-desc">非接触式睡眠监测设备，精确记录睡眠时长、深睡比例、翻身次数等睡眠质量数据。</p>
+                </div>
+            </div>
+            
+            <p style="margin-top: 25px; color: #666; font-style: italic;">
+                * 设备兼容性持续扩展中，未来将支持更多类型的健康监测设备。
+            </p>
+        </section>
+        
+        <!-- 主要功能 -->
+        <section class="content-section">
+            <h2 class="section-title"><i class="fas fa-star"></i> 核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-bluetooth"></i> 智能蓝牙连接</h3>
+                    <p>一键快速连接兼容的健康设备，自动识别设备类型，简化配对流程。支持多设备同时管理，数据自动归类。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-database"></i> 数据自动同步</h3>
+                    <p>测量完成后数据自动上传至云端，多端同步访问。历史数据永久保存，支持导出为Excel或PDF格式。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-chart-line"></i> 智能图表分析</h3>
+                    <p>自动生成趋势图表、对比图表和统计报告。支持日/周/月/年多维度的数据分析，直观展示健康变化趋势。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-bell"></i> 健康提醒与预警</h3>
+                    <p>自定义测量提醒时间，异常数据智能预警。根据您的健康数据趋势，提供个性化的健康改善建议。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-shield-alt"></i> 数据安全加密</h3>
+                    <p>端到端数据加密传输，本地与云端双重加密存储。严格遵守隐私保护法规，您完全掌控自己的健康数据。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-users"></i> 家人数据共享</h3>
+                    <p>支持添加多位家庭成员，统一管理全家健康数据。关心家人健康，特别适合照顾老人和儿童。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 数据展示示例 -->
+        <section class="content-section">
+            <h2 class="section-title"><i class="fas fa-chart-bar"></i> 数据图表展示</h2>
+            <p style="margin-bottom: 20px;">应用将您的健康数据转化为直观的图表，帮助您更好地理解健康状况：</p>
+            
+            <div class="chart-demo">
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-area"></i>
+                    <h3>智能数据可视化</h3>
+                    <p>血压趋势图 | 体脂变化曲线 | 睡眠质量分析图</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #888;">
+                        实际应用中，您的测量数据将自动生成各类专业图表
+                    </p>
+                </div>
+            </div>
+            
+            <div class="features-grid" style="margin-top: 30px;">
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-heart"></i> 血压趋势分析</h3>
+                    <p>生成收缩压/舒张压/心率的变化趋势图，识别血压波动规律，辅助高血压管理。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-balance-scale"></i> 体脂变化追踪</h3>
+                    <p>多维度展示体重、体脂率、肌肉量等指标的变化，直观反映减脂增肌效果。</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title"><i class="fas fa-moon"></i> 睡眠质量评估</h3>
+                    <p>分析睡眠时长、深睡比例、睡眠周期等数据，评估睡眠质量并提供改善建议。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 下载区域 -->
+        <section class="content-section download-section">
+            <h2 class="section-title"><i class="fas fa-download"></i> 下载应用</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">立即下载健康朋友，开启智能健康管理之旅</p>
+            
+            <!-- 蒲公英下载提示 -->
+            <div class="pgyer-notice">
+                <i class="fas fa-info-circle"></i> 提示：本应用通过蒲公英平台分发，下载后根据提示安装即可使用
+            </div>
+            
+            <!-- 安卓下载按钮 -->
+            <a href="https://www.pgyer.com/healthfriends" class="download-btn android" id="android-download" target="_blank">
+                <i class="fab fa-android"></i> Android版下载 (蒲公英平台)
+            </a>
+            
+            <p class="download-note">
+                系统要求：Android 8.0及以上版本<br>
+                当前版本：v1.0.0 | 更新日期：2026年1月<br>
+                应用大小：约14 MB
+            </p>
+            
+            <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">
+                <i class="fas fa-exclamation-triangle"></i> 下载提示：如遇浏览器拦截，请选择"继续访问"或"直接下载"
+            </p>
+        </section>
+        
+        <!-- 联系方式 -->
+        <section class="content-section">
+            <h2 class="section-title"><i class="fas fa-envelope"></i> 联系我们</h2>
+            <p style="margin-bottom: 20px;">如有问题、建议或合作意向，欢迎通过以下方式联系我们</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>邮箱：goodlymed18@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-building"></i>
+                    <span>公司：深圳市谷爱德科技有限公司</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>深圳市谷爱德科技有限公司 © 2024 版权所有</p>
+            <p class="copyright">健康朋友是深圳市谷爱德科技有限公司的注册商标 | 本页面为健康朋友官方介绍页，用于微信开放平台应用审核。</p>
+            <p style="margin-top: 15px; font-size: 0.85rem;">
+                健康监测数据仅供参考，不能替代专业医疗诊断。如有健康问题，请及时咨询医生。
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 应用信息配置
+        document.addEventListener('DOMContentLoaded', function() {
+            const appInfo = {
+                name: "健康朋友",
+                slogan: "专业健康数据管家，蓝牙连接设备，智能统计图表展示您的健康数据",
+                version: "v1.0.0",
+                updateDate: "2024年1月",
+                company: "深圳市谷爱德科技有限公司",
+                email: "goodlymed18@gmail.com",
+                androidUrl: "https://www.pgyer.com/healthfriends"
+            };
+            
+            // 自动填充内容
+            document.title = appInfo.name + " - 官方介绍";
+            
+            console.log('健康朋友应用介绍页已加载 - 下载链接：' + appInfo.androidUrl);
+            
+            // 蒲公英平台访问统计（可选）
+            setTimeout(function() {
+                console.log('健康朋友介绍页已就绪，下载链接有效');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
